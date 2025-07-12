@@ -17,6 +17,7 @@ Team Details
 👤 Team Leader
 Name: Bhavesh Jadhav
 Phone Number: 9923952740
+Email: bhaveshjadhav9923@gmail.com
 
 👥 Team Members
 1.Jay Kadam
