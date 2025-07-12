@@ -1,19 +1,28 @@
 package com.odoo.project.com.odoo.project.Controller;
 
 import com.odoo.project.com.odoo.project.Entity.User;
+import com.odoo.project.com.odoo.project.Repo.userRepository;
+import com.odoo.project.com.odoo.project.Repo.swapRequestRepository;
+import com.odoo.project.com.odoo.project.Repo.feedbackRepository;
+import com.odoo.project.com.odoo.project.Security.ApplicationUserDetails;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/profile")
 @RequiredArgsConstructor
 public class UserController {
-
+    @Autowired
     private final userRepository userRepository;
     private final swapRequestRepository swapRequestRepository;
     private final feedbackRepository feedbackRepository;
@@ -68,7 +77,7 @@ public class UserController {
     public ResponseEntity<?> banUser(@PathVariable Long id) {
         Optional<User> user = userRepository.findById(id);
         if (user.isPresent()) {
-            user.get().setIsBanned(true);
+            user.get().setBanned(true);
             userRepository.save(user.get());
             return ResponseEntity.ok("User banned");
         }

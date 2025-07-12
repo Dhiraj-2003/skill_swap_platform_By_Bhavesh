@@ -1,13 +1,14 @@
 package com.odoo.project.com.odoo.project.Controller;
 
 import com.odoo.project.com.odoo.project.Entity.SwapRequest;
-import com.odoo.project.com.odoo.project.Repo.SwapRequestRepository;
-import com.odoo.project.com.odoo.project.Repo.UserRepository;
+import com.odoo.project.com.odoo.project.Entity.User;
+import com.odoo.project.com.odoo.project.Repo.swapRequestRepository;
+import com.odoo.project.com.odoo.project.Repo.userRepository;
+import com.odoo.project.com.odoo.project.Security.ApplicationUserDetails;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,15 +19,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class SwapRequestController {
 
-    private final SwapRequestRepository swapRepo;
-    private final UserRepository userRepo;
+    private final swapRequestRepository swapRepo;
+    private final userRepository userRepo;
 
     // Send a swap request
     @PostMapping("/request")
-    public ResponseEntity<?> requestSwap(@AuthenticationPrincipal OAuth2ResourceServerProperties.Jwt jwt, @RequestBody SwapRequest swap) {
+    public ResponseEntity<?> requestSwap(@AuthenticationPrincipal Jwt jwt, @RequestBody SwapRequest swap) {
         Long senderId = Long.valueOf(jwt.getSubject());
         Optional<User> sender = userRepo.findById(senderId);
-        Optional<org.springframework.security.core.userdetails.User> receiver = userRepo.findById(swap.getReceiver().getId());
+        Optional<User> receiver = userRepo.findById(swap.getReceiver().getId());
 
         if (sender.isPresent() && receiver.isPresent()) {
             swap.setSender(sender.get());
@@ -70,7 +71,8 @@ public class SwapRequestController {
     @GetMapping("/my")
     public List<SwapRequest> mySwaps(@AuthenticationPrincipal Jwt jwt) {
         Long userId = Long.valueOf(jwt.getSubject());
-        return swapRepo.findBySenderIdOrReceiverId(userId, userId);
+        return swapRepo.findByReceiverId(userId, userId);
+
 
     }
 

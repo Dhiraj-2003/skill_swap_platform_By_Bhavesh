@@ -1,9 +1,9 @@
 package com.odoo.project.com.odoo.project.Controller;
 
-import com.yourpackage.dto.AuthRequest;
-import com.yourpackage.dto.AuthResponse;
-import com.yourpackage.dto.RegisterRequest;
-import com.yourpackage.service.AuthenticationService;
+import com.odoo.project.com.odoo.project.DTO.AuthRequest;
+import com.odoo.project.com.odoo.project.DTO.AuthResponse;
+import com.odoo.project.com.odoo.project.DTO.RegisterRequest;
+import com.odoo.project.com.odoo.project.Service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

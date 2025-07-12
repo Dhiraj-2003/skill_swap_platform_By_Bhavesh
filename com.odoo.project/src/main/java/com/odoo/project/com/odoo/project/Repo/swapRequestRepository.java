@@ -7,4 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface swapRequestRepository extends JpaRepository<SwapRequest, Long> {     List<SwapRequest> findByReceiverId(Long userId); }
+public interface swapRequestRepository extends JpaRepository<SwapRequest, Long> {
+    List<SwapRequest> findByReceiverId(Long userId, Long id);
+
+    List<SwapRequest> findByReceiverIdAndStatus(Long id, String pending);
+}

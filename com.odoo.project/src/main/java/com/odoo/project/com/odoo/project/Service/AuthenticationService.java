@@ -1,12 +1,13 @@
 package com.odoo.project.com.odoo.project.Service;
 
-import com.yourpackage.dto.AuthRequest;
-import com.yourpackage.dto.AuthResponse;
-import com.yourpackage.dto.RegisterRequest;
-import com.yourpackage.model.User;
-import com.yourpackage.repository.UserRepository;
-import com.yourpackage.security.JwtUtils;
+import com.odoo.project.com.odoo.project.DTO.AuthRequest;
+import com.odoo.project.com.odoo.project.DTO.AuthResponse;
+import com.odoo.project.com.odoo.project.Repo.userRepository;
+import com.odoo.project.com.odoo.project.DTO.RegisterRequest;
+import com.odoo.project.com.odoo.project.Entity.User;
+import com.odoo.project.com.odoo.project.Security.JwtUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,25 +15,28 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthenticationService {
 
-    private final UserRepository userRepository;
+    @Autowired
+    private userRepository userRepository;
+
     private final PasswordEncoder passwordEncoder;
+    @Autowired
     private final JwtUtils jwtUtils;
 
     public AuthResponse register(RegisterRequest req) {
-        User user = new User();
-        user.setName(req.getName());
-        user.setEmail(req.getEmail());
-        user.setPassword(passwordEncoder.encode(req.getPassword()));
-        user.setRole("USER");
-        user.setLocation(req.getLocation());
-        user.setAvailability(req.getAvailability());
-        user.setPhotoUrl(req.getPhotoUrl());
-        user.setPublic(req.isPublic());
-        user.setSkillsOffered(req.getSkillsOffered());
-        user.setSkillsWanted(req.getSkillsWanted());
-        userRepository.save(user);
+        User user1 = new User();
+        user1.setName(req.getName());
+        user1.setEmail(req.getEmail());
+        user1.setPassword(passwordEncoder.encode(req.getPassword()));
+        user1.setRole("USER");
+        user1.setLocation(req.getLocation());
+        user1.setAvailability(req.getAvailability());
+        user1.setPhotoUrl(req.getPhotoUrl());
+        user1.setIsPublic(req.isPublic());
+        user1.setSkillsOffered(req.getSkillsOffered());
+        user1.setSkillsWanted(req.getSkillsWanted());
+        userRepository.save(user1);
 
-        String token = jwtUtils.generateToken(user.getId(), user.getRole());
+        String token = jwtUtils.generateToken(user1.getId(), user1.getRole());
         return new AuthResponse(token);
     }
 

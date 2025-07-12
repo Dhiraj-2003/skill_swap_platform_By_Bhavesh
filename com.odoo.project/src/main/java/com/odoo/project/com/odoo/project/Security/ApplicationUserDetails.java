@@ -1,6 +1,7 @@
 package com.odoo.project.com.odoo.project.Security;
 
-import com.yourpackage.model.User;
+
+import com.odoo.project.com.odoo.project.Entity.User;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
